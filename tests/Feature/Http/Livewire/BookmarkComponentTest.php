@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Http\Livewire;
 
+use App\Http\Livewire\BookmarkButton;
 use App\Models\Bookmark;
 use App\Models\Torrent;
 use App\Models\User;
-use App\Http\Livewire\BookmarkButton;
 use Database\Seeders\GroupsTableSeeder;
 use Livewire\Livewire;
 use Tests\TestCase;
