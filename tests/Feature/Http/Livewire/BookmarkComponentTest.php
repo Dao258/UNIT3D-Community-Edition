@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers;
+namespace Tests\Feature\Http\Livewire;
 
 use App\Models\Bookmark;
 use App\Models\Torrent;
@@ -10,9 +10,9 @@ use Livewire\Livewire;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\BookmarkController
+ * @see \App\Http\Livewire\BookmarkButton
  */
-class BookmarkControllerTest extends TestCase
+class BookmarkComponentTest extends TestCase
 {
     protected function setUp(): void
     {
