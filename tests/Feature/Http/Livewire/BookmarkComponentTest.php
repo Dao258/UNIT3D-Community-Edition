@@ -32,7 +32,6 @@ class BookmarkComponentTest extends TestCase
             'status'  => 1,
         ]);
 
-
         Livewire::test(BookmarkButton::class, ['torrent' => $torrent, 'user' => $user])
             ->call('destroy');
 
