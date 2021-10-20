@@ -32,9 +32,8 @@ class BookmarkComponentTest extends TestCase
             'status'  => 1,
         ]);
 
-        Livewire::test(BookmarkButton::class)
-            ->set('torrent', $torrent)
-            ->set('user', $user)
+
+        Livewire::test(BookmarkButton::class, ['torrent' => $torrent, 'user' => $user])
             ->call('destroy');
 
         $this->assertFalse(Bookmark::where('torrent_id', '=', $torrent->id)->where('user_id', '=', $user->id)->exists());
@@ -66,9 +65,7 @@ class BookmarkComponentTest extends TestCase
             'status'  => 1,
         ]);
 
-        Livewire::test(BookmarkButton::class)
-            ->set('torrent', $torrent)
-            ->set('user', $user)
+        Livewire::test(BookmarkButton::class, ['torrent' => $torrent, 'user' => $user])
             ->call('store');
 
         $this->assertTrue(Bookmark::where('torrent_id', '=', $torrent->id)->where('user_id', '=', $user->id)->exists());
