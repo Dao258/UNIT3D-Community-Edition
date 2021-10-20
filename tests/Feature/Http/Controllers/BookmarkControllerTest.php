@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Livewire\Livewire;
-use App\Models\Torrent;
 use App\Models\Bookmark;
+use App\Models\Torrent;
 use App\Models\User;
 use Database\Seeders\GroupsTableSeeder;
+use Livewire\Livewire;
 use Tests\TestCase;
 
 /**
