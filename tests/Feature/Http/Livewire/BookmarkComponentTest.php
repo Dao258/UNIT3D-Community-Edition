@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Livewire;
 use App\Models\Bookmark;
 use App\Models\Torrent;
 use App\Models\User;
+use App\Http\Livewire\BookmarkButton;
 use Database\Seeders\GroupsTableSeeder;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -31,7 +32,7 @@ class BookmarkComponentTest extends TestCase
             'status'  => 1,
         ]);
 
-        Livewire::test(Bookmark::class)
+        Livewire::test(BookmarkButton::class)
             ->set('torrent', $torrent)
             ->set('user', $user)
             ->call('destroy');
@@ -51,7 +52,7 @@ class BookmarkComponentTest extends TestCase
         $response = $this->actingAs($user)->get(route('torrents'));
 
         $response->assertOk()
-            ->assertViewIs('torrent.index')
+            ->assertViewIs('torrent.torrents')
             ->assertViewHas('user');
     }
 
@@ -65,7 +66,7 @@ class BookmarkComponentTest extends TestCase
             'status'  => 1,
         ]);
 
-        Livewire::test(Bookmark::class)
+        Livewire::test(BookmarkButton::class)
             ->set('torrent', $torrent)
             ->set('user', $user)
             ->call('store');
