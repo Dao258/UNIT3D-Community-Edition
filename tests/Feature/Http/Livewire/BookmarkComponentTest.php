@@ -27,9 +27,8 @@ class BookmarkComponentTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $torrent = Torrent::factory()->create([
+        $torrent = Torrent::factory()->make([
             'user_id' => $user->id,
-            'status'  => 1,
         ]);
 
         Livewire::test(BookmarkButton::class, ['torrent' => $torrent->id, 'user' => $user])
@@ -43,9 +42,8 @@ class BookmarkComponentTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $torrent = Torrent::factory()->create([
+        $torrent = Torrent::factory()->make([
             'user_id' => $user->id,
-            'status'  => 1,
         ]);
 
         Livewire::test(BookmarkButton::class, ['torrent' => $torrent->id, 'user' => $user])
