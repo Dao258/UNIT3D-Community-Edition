@@ -13,6 +13,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\MinifyHtml;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -35,6 +36,9 @@ class Kernel extends HttpKernel
 
         // Extra
         \Bepsvpt\SecureHeaders\SecureHeadersMiddleware::class,
+        \App\Http\Middleware\MinifyHtml::class,
+        \App\Http\Middleware\MinifyCss::class,
+        \App\Http\Middleware\MinifyJavascript::class,
         \App\Http\Middleware\Http2ServerPush::class,
     ];
 
