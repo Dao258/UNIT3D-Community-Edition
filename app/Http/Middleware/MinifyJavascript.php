@@ -21,20 +21,18 @@ class MinifyJavascript extends Minifier
     {
         static::$minifyJavascriptHasBeenUsed = true;
 
-        $obfuscate = (bool) config("html-minifier.obfuscate_javascript", false);
+        $obfuscate = (bool) config('html-minifier.obfuscate_javascript', false);
 
-        static::$allowInsertSemicolon = (bool) config("html-minifier.js_automatic_insert_semicolon", true);
+        static::$allowInsertSemicolon = (bool) config('html-minifier.js_automatic_insert_semicolon', true);
 
-        foreach ($this->getByTag("script") as $el)
-        {
+        foreach ($this->getByTag('script') as $el) {
             $value = $this->replace($el->nodeValue);
 
             // Is the obfuscate function enabled?
-            if ($obfuscate)
-            {
+            if ($obfuscate) {
                 $value = $this->obfuscate($value);
             }
-            $el->nodeValue = "";
+            $el->nodeValue = '';
             $el->appendChild(static::$dom->createTextNode($value));
         }
 
@@ -46,7 +44,7 @@ class MinifyJavascript extends Minifier
         // delete all comments
         $value = \preg_replace('/(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\'|\")\/\/.*))/', '', $value);
 
-        $value = \preg_replace_callback('/(`[\S\s]*?[^\\\`]`)/', function($m) {
+        $value = \preg_replace_callback('/(`[\S\s]*?[^\\\`]`)/', function ($m) {
             return \preg_replace('/\n+/', '', $m[1]);
         }, $value);
 
@@ -59,32 +57,27 @@ class MinifyJavascript extends Minifier
             // find blank spaces
             '#^\s*$#',
             // find first and last string do, else
-            '#^(do|else)$#'
+            '#^(do|else)$#',
         ];
 
         $loop = 0;
 
-        foreach ($code as $line)
-        {
+        foreach ($code as $line) {
             $loop++;
             $insert = false;
             $shouldInsert = true;
 
-            foreach ($patternRegex as $pattern)
-            {
+            foreach ($patternRegex as $pattern) {
                 // if the pattern doesn't match it means you can add a semicolon
                 $match = \preg_match($pattern, trim($line));
-                $shouldInsert = $shouldInsert && (bool) !$match;
+                $shouldInsert = $shouldInsert && (bool) ! $match;
             }
 
-            if ($shouldInsert)
-            {
+            if ($shouldInsert) {
                 $i = $loop;
 
-                while (true)
-                {
-                    if ($i >= count($code))
-                    {
+                while (true) {
+                    if ($i >= count($code)) {
                         $insert = true;
                         break;
                     }
@@ -92,20 +85,18 @@ class MinifyJavascript extends Minifier
                     $c = trim($code[$i]);
                     $i++;
 
-                    if (!$c)
-                    {
+                    if (! $c) {
                         continue;
                     }
 
                     $insert = true;
                     $regex = ['#^(\?|\:|,|\.|{|}|\)|\])#'];
 
-                    foreach ($regex as $r)
-                    {
-                        $insert = $insert && (bool) !preg_match($r, $c);
+                    foreach ($regex as $r) {
+                        $insert = $insert && (bool) ! preg_match($r, $c);
                     }
 
-                    if ($insert && \preg_match("#(?:\\})$#", trim($line)) && \preg_match("#^(else|elseif|else\s*if|catch)#", $c)) {
+                    if ($insert && \preg_match('#(?:\\})$#', trim($line)) && \preg_match("#^(else|elseif|else\s*if|catch)#", $c)) {
                         $insert = false;
                     }
 
@@ -113,15 +104,11 @@ class MinifyJavascript extends Minifier
                 }
             }
 
-            if ($insert)
-            {
-                $result[] = sprintf("%s;", $line);
-            }
-            else
-            {
+            if ($insert) {
+                $result[] = sprintf('%s;', $line);
+            } else {
                 $result[] = $line;
             }
-
         }
 
         return \implode("\n", $result);
@@ -129,8 +116,7 @@ class MinifyJavascript extends Minifier
 
     protected function replace($value)
     {
-        if (static::$allowInsertSemicolon)
-        {
+        if (static::$allowInsertSemicolon) {
             $value = $this->insertSemicolon($value);
         }
 
@@ -143,13 +129,13 @@ class MinifyJavascript extends Minifier
             // Minify object attribute(s) except JSON attribute(s). From `{'foo':'bar'}` to `{foo:'bar'}`
             '#([\{,])([\'])(\d+|[a-z_][a-z0-9_]*)\2(?=\:)#i',
             // --ibid. From `foo['bar']` to `foo.bar`
-            '#([a-z0-9_\)\]])\[([\'"])([a-z_][a-z0-9_]*)\2\]#i'
-        ],[
+            '#([a-z0-9_\)\]])\[([\'"])([a-z_][a-z0-9_]*)\2\]#i',
+        ], [
             '$1',
             '$1$2',
             '}',
             '$1$3',
-            '$1.$3'
+            '$1.$3',
         ], $value));
     }
 
@@ -157,8 +143,7 @@ class MinifyJavascript extends Minifier
     {
         $ords = [];
 
-        for ($i = 0, $iMax = strlen($value); $i < $iMax; $i++)
-        {
+        for ($i = 0, $iMax = strlen($value); $i < $iMax; $i++) {
             $ords[] = ord($value[$i]);
         }
 

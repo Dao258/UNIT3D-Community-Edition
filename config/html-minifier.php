@@ -20,7 +20,7 @@ return [
     | Use this to turn on and off the minifier middleware
     |
     */
-    "enable" => env("HTML_MINIFIER_ENABLE", true),
+    'enable' => env('HTML_MINIFIER_ENABLE', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ return [
     | Please set this field to false if your CSS code is buggy or not working after using MinifyCss Middleware
     |
     */
-    "css_automatic_insert_semicolon" => env("HTML_MINIFIER_CSS_AUTOMATIC_INSERT_SEMICOLON", false),
+    'css_automatic_insert_semicolon' => env('HTML_MINIFIER_CSS_AUTOMATIC_INSERT_SEMICOLON', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ return [
     | And don't forget to always end with a semicolon if this field is set to false.
     |
     */
-    "js_automatic_insert_semicolon" => env("HTML_MINIFIER_JS_AUTOMATIC_INSERT_SEMICOLON", false),
+    'js_automatic_insert_semicolon' => env('HTML_MINIFIER_JS_AUTOMATIC_INSERT_SEMICOLON', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return [
     | Note: This setting will apply if using MinifyHtml Middleware
     |
     */
-    "remove_comments" => env("HTML_MINIFIER_REMOVE_COMMENTS", false),
+    'remove_comments' => env('HTML_MINIFIER_REMOVE_COMMENTS', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -69,7 +69,7 @@ return [
     | Note: Maybe this function will make your code long.
     |
     */
-    "obfuscate_javascript" => env("HTML_MINIFIER_OBFUSCATE_JS", false),
+    'obfuscate_javascript' => env('HTML_MINIFIER_OBFUSCATE_JS', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -82,5 +82,5 @@ return [
     |
     */
 
-    "ignore" => [],
+    'ignore' => [],
 ];

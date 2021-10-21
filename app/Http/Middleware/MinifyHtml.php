@@ -20,30 +20,24 @@ class MinifyHtml extends Minifier
     protected function apply()
     {
         // save unminified css and javascript that have the ignored--minify attribute
-        $ignoredCss = $this->getByTagOnlyIgnored("style");
-        $ignoredJs  = $this->getByTagOnlyIgnored("script");
+        $ignoredCss = $this->getByTagOnlyIgnored('style');
+        $ignoredJs = $this->getByTagOnlyIgnored('script');
 
-        if (static::$minifyCssHasBeenUsed && static::$minifyJavascriptHasBeenUsed)
-        {
+        if (static::$minifyCssHasBeenUsed && static::$minifyJavascriptHasBeenUsed) {
             $html = $this->replace(static::$dom->saveHtml());
 
-            if (empty($ignoredCss) || empty($ignoredJs))
-            {
+            if (empty($ignoredCss) || empty($ignoredJs)) {
                 return $html;
             }
 
             $this->loadDom($html, true);
-        }
-        else
-        {
-            if (!static::$minifyCssHasBeenUsed)
-            {
-                $css = $this->getByTag("style");
+        } else {
+            if (! static::$minifyCssHasBeenUsed) {
+                $css = $this->getByTag('style');
             }
 
-            if (!static::$minifyJavascriptHasBeenUsed)
-            {
-                $js = $this->getByTag("script");
+            if (! static::$minifyJavascriptHasBeenUsed) {
+                $js = $this->getByTag('script');
             }
 
             $html = $this->replace(static::$dom->saveHtml());
@@ -51,20 +45,18 @@ class MinifyHtml extends Minifier
             $this->loadDom($html, true);
 
             if (isset($css)) {
-                $this->append("getByTag", "style", $css);
+                $this->append('getByTag', 'style', $css);
             }
             if (isset($js)) {
-                $this->append("getByTag", "script", $js);
+                $this->append('getByTag', 'script', $js);
             }
         }
 
-        if (!empty($ignoredCss))
-        {
-            $this->append("getByTagOnlyIgnored", "style", $ignoredCss);
+        if (! empty($ignoredCss)) {
+            $this->append('getByTagOnlyIgnored', 'style', $ignoredCss);
         }
-        if (!empty($ignoredJs))
-        {
-            $this->append("getByTagOnlyIgnored", "script", $ignoredJs);
+        if (! empty($ignoredJs)) {
+            $this->append('getByTagOnlyIgnored', 'script', $ignoredJs);
         }
 
         return trim(static::$dom->saveHtml());
@@ -73,9 +65,8 @@ class MinifyHtml extends Minifier
     protected function append(string $function, string $tags, array $backup)
     {
         $index = 0;
-        foreach ($this->{$function}($tags) as $el)
-        {
-            $el->nodeValue = "";
+        foreach ($this->{$function}($tags) as $el) {
+            $el->nodeValue = '';
             $el->appendChild(static::$dom->createTextNode($backup[$index]->nodeValue));
             $index++;
         }
@@ -83,7 +74,7 @@ class MinifyHtml extends Minifier
 
     protected function removeComment($value)
     {
-        return \preg_replace(self::REGEX_REMOVE_COMMENT, "", $value);
+        return \preg_replace(self::REGEX_REMOVE_COMMENT, '', $value);
     }
 
     protected function replace($value)
@@ -111,7 +102,7 @@ class MinifyHtml extends Minifier
             '#(?<=\>)(&nbsp;)(?=\<)#',
             // --ibid
             '/\s+/',
-        ],[
+        ], [
             '<$1$2</$1>',
             '$1$2$3',
             '$1$2$3',
@@ -121,10 +112,10 @@ class MinifyHtml extends Minifier
             '<$1$2',
             '$1 ',
             '$1',
-            " ",
+            ' ',
         ], $value));
 
-        $allowRemoveComments = (bool) \config("html-minifier.remove_comments", true);
+        $allowRemoveComments = (bool) \config('html-minifier.remove_comments', true);
 
         return $allowRemoveComments === false
             ? $value

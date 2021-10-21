@@ -21,13 +21,12 @@ class MinifyCss extends Minifier
     {
         static::$minifyCssHasBeenUsed = true;
 
-        static::$allowInsertSemicolon = (bool) config("html-minifier.css_automatic_insert_semicolon", true);
+        static::$allowInsertSemicolon = (bool) config('html-minifier.css_automatic_insert_semicolon', true);
 
-        foreach ($this->getByTag("style") as $el)
-        {
+        foreach ($this->getByTag('style') as $el) {
             $value = $this->replace($el->nodeValue);
 
-            $el->nodeValue = "";
+            $el->nodeValue = '';
             $el->appendChild(static::$dom->createTextNode($value));
         }
 
@@ -41,17 +40,16 @@ class MinifyCss extends Minifier
             // except those ending in braces ({}) or with a semicolon (;)
             '#^[A-Za-z\s\-]+:.+(?<!({|}|;))$#m',
 
-            '#^([A-Za-z\s\-]+):(.+)[;]$(\n+|\s+){#m'
-        ],[
+            '#^([A-Za-z\s\-]+):(.+)[;]$(\n+|\s+){#m',
+        ], [
             '$0;',
-            '$1:$2$3{'
+            '$1:$2$3{',
         ], $value);
     }
 
     protected function replace($value)
     {
-        if (static::$allowInsertSemicolon)
-        {
+        if (static::$allowInsertSemicolon) {
             $value = $this->insertSemicolon($value);
         }
 
@@ -76,8 +74,8 @@ class MinifyCss extends Minifier
             // Replace `(border|outline):none` with `(border|outline):0`
             '#(?<=[\{;])(border|outline):none(?=[;\}\!])#',
             // Remove empty selector(s)
-            '#(\/\*(?>.*?\*\/))|(^|[\{\}])(?:[^\s\{\}]+)\{\}#s'            //
-        ],[
+            '#(\/\*(?>.*?\*\/))|(^|[\{\}])(?:[^\s\{\}]+)\{\}#s',            //
+        ], [
             '$1',
             '$1$2$3$4$5$6$7',
             '$1',
@@ -88,7 +86,7 @@ class MinifyCss extends Minifier
             '$1$2$4$5',
             '$1$2$3',
             '$1:0',
-            '$1$2'
+            '$1$2',
         ], $value));
     }
 }
